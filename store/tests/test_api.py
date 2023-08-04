@@ -71,21 +71,14 @@ class BookAPITestCase(APITestCase):
         self.book_1.refresh_from_db()
         self.assertEqual(575, self.book_1.price)
 
-    # def test_delete(self):
-    #     self.assertEqual(2, Book.objects.all().count())
-    #     self.client.force_login(self.test_user)
-    #     url = reverse('book-detail', args=(self.book_1,))
-    #     print(url)
-    #     data = {
-    #         "title": self.book_1.title,
-    #         "price": self.book_1.price,
-    #         "author_name": self.book_1.author_name
-    #     }
-    #     json_data = json.dumps(data)
-    #     response = self.client.delete(url, data=json_data, content_type='applicataion/json')
-    #     print(response)
-    #     self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
-    #     self.assertEqual(1, Book.objects.all().count())
+    def test_delete(self):
+        self.assertEqual(2, Book.objects.all().count())
+        self.client.force_login(self.test_user)
+        url = reverse('book-detail', args=(self.book_1.id,))
+        response = self.client.delete(url)
+        print(response)
+        self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
+        self.assertEqual(1, Book.objects.all().count())
 
     def test_get_id(self):
         url = reverse('book-detail', args=(self.book_2.id,))
