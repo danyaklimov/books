@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 
 from store.models import Book
-from store.permissions import IsOwnerOrReadOnly
+from store.permissions import IsOwnerOrStaffOrReadOnly
 from store.serializers import BookSerializer
 
 
@@ -16,7 +15,7 @@ class BookViewSet(ModelViewSet):
     filterset_fields = ['price', 'author_name']
     search_fields = ['title', 'author_name']
     ordering_fields = ['price', 'author_name', 'title']
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrStaffOrReadOnly]
 
     def perform_create(self, serializer):         # назначает owner'a при создании книги
         serializer.validated_data['owner'] = self.request.user
