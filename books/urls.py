@@ -19,11 +19,12 @@ from django.template.defaulttags import url   # depricated
 from django.urls import path, include, re_path
 from rest_framework.routers import SimpleRouter
 
-from store.views import BookViewSet, auth
+from store.views import BookViewSet, auth, UserBookRelationViewSet
 
 router = SimpleRouter()
 
 router.register(r'book', BookViewSet)
+router.register('book_relation', UserBookRelationViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
