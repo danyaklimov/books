@@ -92,7 +92,7 @@ class BookAPITestCase(APITestCase):
                                              ErrorDetail(string='You do not have permission to perform this action.',
                                                          code='permission_denied')})
 
-    def test_update_not_owner_but_staff(self):  ### негативный тест
+    def test_update_not_owner_but_staff(self):
         self.test_user_2 = User.objects.create(username="test_user_2", is_staff=True)
         self.client.force_login(self.test_user_2)
         url = reverse('book-detail', args=(self.book_1.id,))
@@ -112,7 +112,6 @@ class BookAPITestCase(APITestCase):
         self.client.force_login(self.test_user)
         url = reverse('book-detail', args=(self.book_1.id,))
         response = self.client.delete(url)
-        print(response)
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
         self.assertEqual(1, Book.objects.all().count())
 
