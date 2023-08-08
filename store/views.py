@@ -29,5 +29,10 @@ class UserBookRelationViewSet(UpdateModelMixin, GenericViewSet):
     permission_classes = [IsAuthenticated]
     lookup_field = 'book'
 
+    def get_object(self):
+        obj, _ = UserBookRelation.objects.get_or_create(user=self.request.user, book_id=self.kwargs['book'])
+
+        return obj
+
 def auth(request):
     return render(request, 'oauth.html')
